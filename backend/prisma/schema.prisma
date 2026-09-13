@@ -1,0 +1,299 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  SELLER
+  CUSTOMER
+}
+
+model User {
+  id              String    @id @default(uuid())
+  fullName        String
+  username        String    @unique
+  email           String?   @unique
+  phone           String?   @unique
+  password        String?
+  avatar          String?
+  provider        String?   @default("LOCAL")
+  providerId      String?
+  role            Role      @default(CUSTOMER)
+  isVerified      Boolean   @default(false)
+  emailVerifiedAt DateTime?
+  phoneVerifiedAt DateTime?
+
+  twoFactorEnabled Boolean @default(false)
+  twoFactorSecret  String?
+  backupCodes      String? @db.Text
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  carts              Cart[]
+  orders             Order[]
+  products           Product[]           @relation("SellerProducts")
+  reviews            Review[]
+  wishlists          Wishlist[]
+  tickets            Ticket[]
+  ticketMessages     TicketMessage[]
+  authAccounts       AuthAccount[]
+  sessions           UserSession[]
+  loginActivities    LoginActivity[]
+  verificationTokens VerificationToken[]
+}
+
+model AuthAccount {
+  id                String   @id @default(uuid())
+  userId            String
+  provider          String // GOOGLE, FACEBOOK, APPLE, MICROSOFT, GITHUB, PASSKEY
+  providerAccountId String
+  providerEmail     String?
+  createdAt         DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@unique([userId, provider])
+}
+
+model UserSession {
+  id          String   @id @default(uuid())
+  userId      String
+  tokenHash   String?
+  device      String?
+  browser     String?
+  os          String?
+  ipAddress   String?
+  lastActive  DateTime @default(now())
+  isCurrent   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model LoginActivity {
+  id        String   @id @default(uuid())
+  userId    String
+  action    String // LOGIN_SUCCESS, LOGIN_FAILED, PASSWORD_CHANGED, 2FA_ENABLED, 2FA_DISABLED, ACCOUNT_LINKED, LOGOUT_ALL, SESSION_REVOKED
+  ipAddress String?
+  device    String?
+  location  String?
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  id          String    @id @default(uuid())
+  userId      String?
+  target      String // email address or phone number
+  type        String // EMAIL_VERIFICATION, PHONE_OTP, FORGOT_PASSWORD_OTP, FORGOT_PASSWORD_TOKEN
+  token       String // 6-digit OTP code or random hash
+  expiresAt   DateTime
+  attempts    Int       @default(0)
+  maxAttempts Int       @default(5)
+  usedAt      DateTime?
+  createdAt   DateTime  @default(now())
+
+  user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Product {
+  id          String  @id @default(uuid())
+  name        String
+  description String?
+  price       Float
+  stock       Int
+  image       String?
+
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  sellerId String
+  seller   User   @relation("SellerProducts", fields: [sellerId], references: [id])
+
+  carts      Cart[]
+  orderItems OrderItem[]
+  reviews    Review[]
+  wishlists  Wishlist[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Category {
+  id          String  @id @default(uuid())
+  name        String  @unique
+  description String?
+  icon        String?
+  isActive    Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  products Product[]
+}
+
+model Cart {
+  id       String @id @default(uuid())
+  quantity Int
+
+  userId    String
+  productId String
+
+  user    User    @relation(fields: [userId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Wishlist {
+  id String @id @default(uuid())
+
+  userId    String
+  productId String
+
+  user    User    @relation(fields: [userId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@unique([userId, productId])
+}
+
+model Order {
+  id         String      @id @default(uuid())
+  totalPrice Float
+  status     OrderStatus @default(PENDING)
+
+  // Shipping details
+  shippingAddress String? @db.Text
+  shippingCourier String?
+  shippingCost    Float   @default(0)
+
+  // Financial details
+  serviceFee     Float   @default(1000)
+  discountAmount Float   @default(0)
+  voucherCode    String?
+
+  // Payment details
+  paymentMethod    String?
+  paymentCode      String?
+  paymentExpiresAt DateTime?
+  paidAt           DateTime?
+  payLaterTenor    Int?
+  payLaterMonthly  Float?
+
+  // Refund details
+  refundReason        String?   @db.Text
+  refundStatus        String?
+  refundBank          String?
+  refundAccountNumber String?
+  refundAccountName   String?
+  refundRequestedAt   DateTime?
+  refundProcessedAt   DateTime?
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  items OrderItem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model OrderItem {
+  id String @id @default(uuid())
+
+  quantity Int
+  price    Float
+
+  orderId   String
+  productId String
+
+  order   Order   @relation(fields: [orderId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
+}
+
+model Review {
+  id String @id @default(uuid())
+
+  rating  Int
+  comment String?
+  image   String?
+  video   String?
+  orderId String?
+
+  userId    String
+  productId String
+
+  user    User    @relation(fields: [userId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum OrderStatus {
+  PENDING
+  PROCESSING
+  PAID
+  SHIPPED
+  COMPLETED
+  CANCELLED
+  EXPIRED
+  REFUND_REQUESTED
+  REFUNDED
+}
+
+enum TicketStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  REJECTED
+  CLOSED
+}
+
+model Ticket {
+  id                    String       @id @default(uuid())
+  ticketNumber          String       @unique
+  subject               String
+  category              String
+  status                TicketStatus @default(OPEN)
+  priority              String       @default("NORMAL")
+  requestedCategoryName String?
+  adminNote             String?
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  messages TicketMessage[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model TicketMessage {
+  id       String  @id @default(uuid())
+  message  String  @db.Text
+  senderId String
+  isAdmin  Boolean @default(false)
+  isRead   Boolean @default(false)
+
+  ticketId String
+  ticket   Ticket @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+
+  sender User @relation(fields: [senderId], references: [id])
+
+  createdAt DateTime @default(now())
+}
