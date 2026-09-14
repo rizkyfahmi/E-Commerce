@@ -8,7 +8,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { WishlistService } from './wishlist.service';
 
 @Controller('wishlist')

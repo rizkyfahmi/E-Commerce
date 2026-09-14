@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 
 import { CartService } from './cart.service';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { CreateCartDto } from './dto/create-cart.dto';
 import { UpdateCartDto } from './dto/update-cart.dto';
 
