@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { PrismaModule } from 'src/prisma/prisma.module';
+import { PrismaModule } from '../prisma/prisma.module';
 import { ReviewController } from './review.controller';
 import { ReviewService } from './review.service';
 
@@ -8,4 +8,4 @@ import { ReviewService } from './review.service';
   controllers: [ReviewController],
   providers: [ReviewService],
 })
-export class ReviewModule {}
+export class ReviewModule { }

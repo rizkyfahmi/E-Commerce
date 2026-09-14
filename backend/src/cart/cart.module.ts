@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { PrismaModule } from 'src/prisma/prisma.module';
+import { PrismaModule } from '../prisma/prisma.module';
 import { CartController } from './cart.controller';
 import { CartService } from './cart.service';
 
@@ -8,4 +8,4 @@ import { CartService } from './cart.service';
   controllers: [CartController],
   providers: [CartService],
 })
-export class CartModule {}
+export class CartModule { }

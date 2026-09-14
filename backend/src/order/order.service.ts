@@ -5,12 +5,12 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { OrderStatus, Role } from '@prisma/client';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { CheckoutDto, DirectCheckoutDto, RequestRefundDto } from './dto/checkout.dto';
 
 @Injectable()
 export class OrderService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   private generatePaymentCode(method?: string): string {
     const randomDigits = (len: number) =>
