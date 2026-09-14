@@ -6,16 +6,9 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { diskStorage } from 'multer';
-import { extname } from 'path';
+import { memoryStorage } from 'multer';
 
-const storage = diskStorage({
-  destination: './uploads',
-  filename: (req, file, callback) => {
-    const uniqueName = Date.now() + '-' + Math.round(Math.random() * 1e9);
-    callback(null, uniqueName + extname(file.originalname));
-  },
-});
+const storage = memoryStorage();
 
 @Controller('upload')
 export class UploadController {
@@ -24,7 +17,7 @@ export class UploadController {
     FileInterceptor('image', {
       storage,
       limits: {
-        fileSize: 50 * 1024 * 1024, // 50MB max
+        fileSize: 10 * 1024 * 1024, // 10MB max
       },
     }),
   )
@@ -32,10 +25,14 @@ export class UploadController {
     if (!file) {
       throw new BadRequestException('File tidak ditemukan');
     }
+
+    const url = `data:${file.mimetype};base64,${file.buffer.toString(
+      'base64',
+    )}`;
+
     return {
-      filename: file.filename,
-      path: `/uploads/${file.filename}`,
-      url: `http://localhost:3000/uploads/${file.filename}`,
+      filename: file.originalname,
+      url,
     };
   }
 
@@ -44,7 +41,7 @@ export class UploadController {
     FileInterceptor('file', {
       storage,
       limits: {
-        fileSize: 50 * 1024 * 1024, // 50MB max
+        fileSize: 10 * 1024 * 1024, // 10MB max
       },
     }),
   )
@@ -52,10 +49,14 @@ export class UploadController {
     if (!file) {
       throw new BadRequestException('File tidak ditemukan');
     }
+
+    const url = `data:${file.mimetype};base64,${file.buffer.toString(
+      'base64',
+    )}`;
+
     return {
-      filename: file.filename,
-      path: `/uploads/${file.filename}`,
-      url: `http://localhost:3000/uploads/${file.filename}`,
+      filename: file.originalname,
+      url,
     };
   }
 }
