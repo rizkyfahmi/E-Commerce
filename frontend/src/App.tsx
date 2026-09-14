@@ -1,3 +1,4 @@
+import { API_BASE_URL } from "./lib/config";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
@@ -126,7 +127,7 @@ function App() {
         return;
       }
 
-      const response = await fetch("http://localhost:3000/cart", {
+      const response = await fetch(`${API_BASE_URL}/cart`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -165,7 +166,7 @@ function App() {
       }
 
       try {
-        const response = await fetch("http://localhost:3000/wishlist", {
+        const response = await fetch(`${API_BASE_URL}/wishlist`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -197,7 +198,7 @@ function App() {
     try {
       const token = localStorage.getItem("token");
 
-      const response = await fetch("http://localhost:3000/cart", {
+      const response = await fetch(`${API_BASE_URL}/cart`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

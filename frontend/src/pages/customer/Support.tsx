@@ -1,3 +1,4 @@
+import { API_BASE_URL } from "../../lib/config";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -94,7 +95,7 @@ function CustomerSupport() {
         return;
       }
       setLoading(true);
-      const res = await fetch("http://localhost:3000/ticket/my-tickets", {
+      const res = await fetch(`${API_BASE_URL}/ticket/my-tickets`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -132,7 +133,7 @@ function CustomerSupport() {
     const fetchTicketDetail = async () => {
       try {
         setTicketLoading(true);
-        const res = await fetch(`http://localhost:3000/ticket/${selectedTicketId}`, {
+        const res = await fetch(`${API_BASE_URL}/ticket/${selectedTicketId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -167,7 +168,7 @@ function CustomerSupport() {
       setSubmitting(true);
       setCreateError("");
 
-      const res = await fetch("http://localhost:3000/ticket", {
+      const res = await fetch(`${API_BASE_URL}/ticket`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -209,7 +210,7 @@ function CustomerSupport() {
 
     try {
       setSendingReply(true);
-      const res = await fetch(`http://localhost:3000/ticket/${selectedTicketId}/message`, {
+      const res = await fetch(`${API_BASE_URL}/ticket/${selectedTicketId}/message`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

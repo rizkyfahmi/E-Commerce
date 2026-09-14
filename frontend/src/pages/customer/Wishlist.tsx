@@ -1,3 +1,4 @@
+import { API_BASE_URL } from "../../lib/config";
 import { useEffect, useState } from "react";
 import { ArrowLeft, Heart, ShoppingCart, Trash2 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
@@ -40,7 +41,7 @@ function Wishlist() {
         return;
       }
 
-      const response = await fetch("http://localhost:3000/wishlist", {
+      const response = await fetch(`${API_BASE_URL}/wishlist`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -70,7 +71,7 @@ function Wishlist() {
     if (!confirmDelete) return;
 
     try {
-      const response = await fetch(`http://localhost:3000/wishlist/${productId}`, {
+      const response = await fetch(`${API_BASE_URL}/wishlist/${productId}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -141,7 +142,7 @@ function Wishlist() {
                         item.product.image
                           ? item.product.image.startsWith("http")
                             ? item.product.image
-                            : `http://localhost:3000/uploads/${item.product.image}`
+                            : `${API_BASE_URL}/uploads/${item.product.image}`
                           : "https://images.unsplash.com/photo-1603302576837-37561b2e2302?q=80&w=700&auto=format&fit=crop"
                       }
                       alt={item.product.name}

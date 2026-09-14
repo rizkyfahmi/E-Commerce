@@ -1,3 +1,4 @@
+import { API_BASE_URL } from "../../lib/config";
 import { useEffect, useState } from "react";
 import SellerLayout from "../../components/seller/SellerLayout";
 import { TrendingUp, ShoppingBag, Boxes, Award, Package } from "lucide-react";
@@ -33,7 +34,7 @@ function SellerSales() {
       const token = localStorage.getItem("token");
 
       const response = await fetch(
-        "http://localhost:3000/order/seller/summary",
+        `${API_BASE_URL}/order/seller/summary`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

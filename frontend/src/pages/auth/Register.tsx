@@ -1,3 +1,4 @@
+import { API_BASE_URL } from "../../lib/config";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import SocialLoginModal, { type SocialProviderData } from "../../components/SocialLoginModal";
@@ -71,7 +72,7 @@ function Register() {
       setLoading(true);
       setError("");
 
-      const response = await fetch("http://localhost:3000/auth/register", {
+      const response = await fetch(`${API_BASE_URL}/auth/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -162,7 +163,7 @@ function Register() {
       setLoading(true);
       setError("");
 
-      const res = await fetch(`http://localhost:3000/auth/oauth/${providerId}/url`);
+      const res = await fetch(`${API_BASE_URL}/auth/oauth/${providerId}/url`);
       const data = await res.json();
 
       if (data.configured && data.url) {

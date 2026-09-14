@@ -1,3 +1,4 @@
+import { API_BASE_URL } from "../../lib/config";
 import { useEffect, useState } from "react";
 import SellerLayout from "../../components/seller/SellerLayout";
 import { User, Store, Mail, Calendar, Save, CheckCircle } from "lucide-react";
@@ -26,7 +27,7 @@ function SellerProfile() {
   const fetchProfile = async () => {
     try {
       setLoading(true);
-      const response = await fetch("http://localhost:3000/users/profile", {
+      const response = await fetch(`${API_BASE_URL}/users/profile`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -63,7 +64,7 @@ function SellerProfile() {
 
     try {
       setSaving(true);
-      const response = await fetch("http://localhost:3000/users/profile", {
+      const response = await fetch(`${API_BASE_URL}/users/profile`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

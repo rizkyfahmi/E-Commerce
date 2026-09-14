@@ -1,3 +1,4 @@
+import { API_BASE_URL } from "../lib/config";
 import { AlertCircle, CheckCircle2, ShoppingBag, X } from "lucide-react";
 import React from "react";
 
@@ -99,7 +100,7 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
                     src={
                       itemDetails.image.startsWith("http")
                         ? itemDetails.image
-                        : `http://localhost:3000/uploads/${itemDetails.image}`
+                        : `${API_BASE_URL}/uploads/${itemDetails.image}`
                     }
                     alt={itemDetails.name}
                     className="h-full w-full object-cover"

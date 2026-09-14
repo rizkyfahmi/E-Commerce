@@ -1,3 +1,4 @@
+import { API_BASE_URL } from "../../lib/config";
 import {
   ArrowLeft,
   Heart,
@@ -111,7 +112,7 @@ function ProductDetail({
   useEffect(() => {
     const fetchDetail = async () => {
       try {
-        const res = await fetch(`http://localhost:3000/product/detail/${product.id}`);
+        const res = await fetch(`${API_BASE_URL}/product/detail/${product.id}`);
         if (res.ok) {
           const data = await res.json();
           setProductData(data);
@@ -128,7 +129,7 @@ function ProductDetail({
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const res = await fetch(`http://localhost:3000/review/product/${product.id}`);
+        const res = await fetch(`${API_BASE_URL}/review/product/${product.id}`);
         if (res.ok) {
           const data = await res.json();
           setReviews(data.reviews || []);
@@ -153,7 +154,7 @@ function ProductDetail({
       }
 
       try {
-        const response = await fetch("http://localhost:3000/wishlist", {
+        const response = await fetch(`${API_BASE_URL}/wishlist`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -186,7 +187,7 @@ function ProductDetail({
 
     try {
       setWishlistLoading(true);
-      const response = await fetch(`http://localhost:3000/wishlist/${product.id}`, {
+      const response = await fetch(`${API_BASE_URL}/wishlist/${product.id}`, {
         method: liked ? "DELETE" : "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -201,7 +202,7 @@ function ProductDetail({
       const newLiked = !liked;
       setLiked(newLiked);
 
-      const wishlistResponse = await fetch("http://localhost:3000/wishlist", {
+      const wishlistResponse = await fetch(`${API_BASE_URL}/wishlist`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -305,7 +306,7 @@ function ProductDetail({
                 productData.image
                   ? productData.image.startsWith("http")
                     ? productData.image
-                    : `http://localhost:3000/uploads/${productData.image}`
+                    : `${API_BASE_URL}/uploads/${productData.image}`
                   : "https://images.unsplash.com/photo-1603302576837-37561b2e2302?q=80&w=1000&auto=format&fit=crop"
               }
               alt={productData.name}
@@ -610,7 +611,7 @@ function ProductDetail({
                               type: "image",
                               url: rev.image!.startsWith("http")
                                 ? rev.image!
-                                : `http://localhost:3000/uploads/${rev.image}`,
+                                : `${API_BASE_URL}/uploads/${rev.image}`,
                             })
                           }
                           className="group relative h-20 w-20 sm:h-24 sm:w-24 cursor-pointer overflow-hidden rounded-xl bg-slate-100 border border-slate-200"
@@ -619,7 +620,7 @@ function ProductDetail({
                             src={
                               rev.image.startsWith("http")
                                 ? rev.image
-                                : `http://localhost:3000/uploads/${rev.image}`
+                                : `${API_BASE_URL}/uploads/${rev.image}`
                             }
                             alt="Foto Review"
                             className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
@@ -637,7 +638,7 @@ function ProductDetail({
                               type: "video",
                               url: rev.video!.startsWith("http")
                                 ? rev.video!
-                                : `http://localhost:3000/uploads/${rev.video}`,
+                                : `${API_BASE_URL}/uploads/${rev.video}`,
                             })
                           }
                           className="group relative h-20 w-20 sm:h-24 sm:w-24 cursor-pointer overflow-hidden rounded-xl bg-slate-900 border border-slate-700 flex items-center justify-center text-white"

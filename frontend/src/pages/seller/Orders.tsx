@@ -1,3 +1,4 @@
+import { API_BASE_URL } from "../../lib/config";
 import { useEffect, useState } from "react";
 import SellerLayout from "../../components/seller/SellerLayout";
 import { Package, Search, User, Eye, RefreshCw, CheckCircle, Truck, Ban, AlertCircle, FileText } from "lucide-react";
@@ -57,7 +58,7 @@ function SellerOrders() {
   const fetchOrders = async () => {
     try {
       setLoading(true);
-      const response = await fetch("http://localhost:3000/order/seller", {
+      const response = await fetch(`${API_BASE_URL}/order/seller`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -89,8 +90,8 @@ function SellerOrders() {
 
       const endpoint =
         type === "SHIP"
-          ? `http://localhost:3000/order/${order.id}/ship`
-          : `http://localhost:3000/order/${order.id}/status`;
+          ? `${API_BASE_URL}/order/${order.id}/ship`
+          : `${API_BASE_URL}/order/${order.id}/status`;
 
       const response = await fetch(endpoint, {
         method: type === "SHIP" ? "POST" : "PATCH",
@@ -537,7 +538,7 @@ function SellerOrders() {
                         src={
                           item.product.image.startsWith("http")
                             ? item.product.image
-                            : `http://localhost:3000/uploads/${item.product.image}`
+                            : `${API_BASE_URL}/uploads/${item.product.image}`
                         }
                         alt={item.product.name}
                         className="h-11 w-11 rounded-xl object-cover"

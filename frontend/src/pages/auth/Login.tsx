@@ -1,3 +1,4 @@
+import { API_BASE_URL } from "../../lib/config";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import SocialLoginModal, { type SocialProviderData } from "../../components/SocialLoginModal";
@@ -75,7 +76,7 @@ function Login() {
       setLoading(true);
       setError("");
 
-      const response = await fetch("http://localhost:3000/auth/login", {
+      const response = await fetch(`${API_BASE_URL}/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -120,7 +121,7 @@ function Login() {
       setError("");
       setDevOtpHint(null);
 
-      const res = await fetch("http://localhost:3000/auth/otp/send", {
+      const res = await fetch(`${API_BASE_URL}/auth/otp/send`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ phone: phone.trim() }),
@@ -153,7 +154,7 @@ function Login() {
       setLoading(true);
       setError("");
 
-      const res = await fetch("http://localhost:3000/auth/otp/login", {
+      const res = await fetch(`${API_BASE_URL}/auth/otp/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -270,7 +271,7 @@ function Login() {
       setLoading(true);
       setError("");
 
-      const res = await fetch(`http://localhost:3000/auth/oauth/${providerId}/url`);
+      const res = await fetch(`${API_BASE_URL}/auth/oauth/${providerId}/url`);
       const data = await res.json();
 
       if (data.configured && data.url) {

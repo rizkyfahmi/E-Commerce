@@ -1,3 +1,4 @@
+import { API_BASE_URL } from "../../lib/config";
 import { useEffect, useState } from "react";
 import AdminLayout from "../../components/admin/AdminLayout";
 import { Store, Package, Mail, Calendar, Search } from "lucide-react";
@@ -37,7 +38,7 @@ function Sellers() {
   const fetchSellers = async () => {
     try {
       setLoading(true);
-      const response = await fetch("http://localhost:3000/admin/sellers", {
+      const response = await fetch(`${API_BASE_URL}/admin/sellers`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

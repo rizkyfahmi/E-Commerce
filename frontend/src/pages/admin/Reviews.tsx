@@ -1,3 +1,4 @@
+import { API_BASE_URL } from "../../lib/config";
 import { useEffect, useState } from "react";
 import AdminLayout from "../../components/admin/AdminLayout";
 import { Star, Store, Trash2, Search } from "lucide-react";
@@ -35,7 +36,7 @@ function Reviews() {
   const fetchReviews = async () => {
     try {
       setLoading(true);
-      const response = await fetch("http://localhost:3000/admin/reviews", {
+      const response = await fetch(`${API_BASE_URL}/admin/reviews`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -66,7 +67,7 @@ function Reviews() {
 
     try {
       const response = await fetch(
-        `http://localhost:3000/admin/reviews/${reviewId}`,
+        `${API_BASE_URL}/admin/reviews/${reviewId}`,
         {
           method: "DELETE",
           headers: {

@@ -1,3 +1,4 @@
+import { API_BASE_URL } from "../../lib/config";
 import { useEffect, useState } from "react";
 import {
   ArrowLeft,
@@ -397,7 +398,7 @@ function Checkout() {
     } else {
       const fetchCart = async () => {
         try {
-          const response = await fetch("http://localhost:3000/cart", {
+          const response = await fetch(`${API_BASE_URL}/cart`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -553,8 +554,8 @@ function Checkout() {
       };
 
       const endpoint = directItem
-        ? "http://localhost:3000/order/direct-checkout"
-        : "http://localhost:3000/order/checkout";
+        ? `${API_BASE_URL}/order/direct-checkout`
+        : `${API_BASE_URL}/order/checkout`;
 
       const bodyData = directItem
         ? {
@@ -717,7 +718,7 @@ function Checkout() {
                           item.product.image
                             ? item.product.image.startsWith("http")
                               ? item.product.image
-                              : `http://localhost:3000/uploads/${item.product.image}`
+                              : `${API_BASE_URL}/uploads/${item.product.image}`
                             : "https://images.unsplash.com/photo-1603302576837-37561b2e2302?q=80&w=500&auto=format&fit=crop"
                         }
                         alt={item.product.name}

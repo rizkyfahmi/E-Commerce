@@ -1,3 +1,4 @@
+import { API_BASE_URL } from "../../lib/config";
 import { useEffect, useState } from "react";
 import AdminLayout from "../../components/admin/AdminLayout";
 import { Save, CheckCircle, Percent, Mail, Globe } from "lucide-react";
@@ -28,7 +29,7 @@ function Settings() {
   const fetchSettings = async () => {
     try {
       setLoading(true);
-      const response = await fetch("http://localhost:3000/admin/settings", {
+      const response = await fetch(`${API_BASE_URL}/admin/settings`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -57,7 +58,7 @@ function Settings() {
       setSaving(true);
       setSavedSuccess(false);
 
-      const response = await fetch("http://localhost:3000/admin/settings", {
+      const response = await fetch(`${API_BASE_URL}/admin/settings`, {
         method: "PATCH",
         headers: {
           Authorization: `Bearer ${token}`,

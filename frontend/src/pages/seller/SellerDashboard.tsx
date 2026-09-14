@@ -1,3 +1,4 @@
+import { API_BASE_URL } from "../../lib/config";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import SellerLayout from "../../components/seller/SellerLayout";
@@ -76,16 +77,16 @@ function SellerDashboard() {
     try {
       setLoading(true);
       const [productsRes, ordersRes, summaryRes, reviewsRes] = await Promise.all([
-        fetch("http://localhost:3000/product/my-product", {
+        fetch(`${API_BASE_URL}/product/my-product`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
-        fetch("http://localhost:3000/order/seller", {
+        fetch(`${API_BASE_URL}/order/seller`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
-        fetch("http://localhost:3000/order/seller/summary", {
+        fetch(`${API_BASE_URL}/order/seller/summary`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
-        fetch("http://localhost:3000/review/seller/my-reviews", {
+        fetch(`${API_BASE_URL}/review/seller/my-reviews`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
       ]);

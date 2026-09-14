@@ -1,3 +1,4 @@
+import { API_BASE_URL } from "../../lib/config";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
@@ -105,13 +106,13 @@ function SecuritySettings() {
 
     try {
       const [resMethods, resSessions, resActivities] = await Promise.all([
-        fetch("http://localhost:3000/auth/security/methods", {
+        fetch(`${API_BASE_URL}/auth/security/methods`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
-        fetch("http://localhost:3000/auth/security/sessions", {
+        fetch(`${API_BASE_URL}/auth/security/sessions`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
-        fetch("http://localhost:3000/auth/security/activity", {
+        fetch(`${API_BASE_URL}/auth/security/activity`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
       ]);
@@ -147,7 +148,7 @@ function SecuritySettings() {
       onConfirm: async () => {
         try {
           const res = await fetch(
-            `http://localhost:3000/auth/security/sessions/${sessionId}`,
+            `${API_BASE_URL}/auth/security/sessions/${sessionId}`,
             {
               method: "DELETE",
               headers: { Authorization: `Bearer ${token}` },
@@ -176,7 +177,7 @@ function SecuritySettings() {
       onConfirm: async () => {
         try {
           const res = await fetch(
-            "http://localhost:3000/auth/security/sessions/logout-all",
+            `${API_BASE_URL}/auth/security/sessions/logout-all`,
             {
               method: "POST",
               headers: { Authorization: `Bearer ${token}` },
@@ -204,7 +205,7 @@ function SecuritySettings() {
       onConfirm: async () => {
         try {
           const res = await fetch(
-            `http://localhost:3000/auth/security/unlink/${provider}`,
+            `${API_BASE_URL}/auth/security/unlink/${provider}`,
             {
               method: "DELETE",
               headers: { Authorization: `Bearer ${token}` },
@@ -226,7 +227,7 @@ function SecuritySettings() {
   // Start 2FA Setup
   const handleStart2FASetup = async () => {
     try {
-      const res = await fetch("http://localhost:3000/auth/security/2fa/setup", {
+      const res = await fetch(`${API_BASE_URL}/auth/security/2fa/setup`, {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -247,7 +248,7 @@ function SecuritySettings() {
       return;
     }
     try {
-      const res = await fetch("http://localhost:3000/auth/security/2fa/enable", {
+      const res = await fetch(`${API_BASE_URL}/auth/security/2fa/enable`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -268,7 +269,7 @@ function SecuritySettings() {
   // Disable 2FA
   const handleDisable2FA = async () => {
     try {
-      const res = await fetch("http://localhost:3000/auth/security/2fa/disable", {
+      const res = await fetch(`${API_BASE_URL}/auth/security/2fa/disable`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

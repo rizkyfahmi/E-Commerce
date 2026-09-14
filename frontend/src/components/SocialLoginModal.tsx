@@ -1,3 +1,4 @@
+import { API_BASE_URL } from "../lib/config";
 import React, { useState } from "react";
 import { X, Sparkles, ChevronRight, ShieldCheck } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -139,7 +140,7 @@ export const SocialLoginModal: React.FC<SocialLoginModalProps> = ({
 
       if (mode === "link" && token) {
         // LINK TO CURRENT LOGGED-IN USER ACCOUNT
-        const res = await fetch("http://localhost:3000/auth/security/link", {
+        const res = await fetch(`${API_BASE_URL}/auth/security/link`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -161,7 +162,7 @@ export const SocialLoginModal: React.FC<SocialLoginModalProps> = ({
         onClose();
       } else {
         // SOCIAL SIGN IN / GUEST LOGIN
-        const res = await fetch("http://localhost:3000/auth/social-login", {
+        const res = await fetch(`${API_BASE_URL}/auth/social-login`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({

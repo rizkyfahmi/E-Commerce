@@ -1,3 +1,4 @@
+import { API_BASE_URL } from "../../lib/config";
 import { useEffect, useState } from "react";
 import AdminLayout from "../../components/admin/AdminLayout";
 import { Search, Shield, Trash2 } from "lucide-react";
@@ -33,7 +34,7 @@ function Users() {
       if (roleFilter) queryParams.append("role", roleFilter);
 
       const response = await fetch(
-        `http://localhost:3000/admin/users?${queryParams.toString()}`,
+        `${API_BASE_URL}/admin/users?${queryParams.toString()}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -87,7 +88,7 @@ function Users() {
 
     try {
       const response = await fetch(
-        `http://localhost:3000/admin/users/${userId}/role`,
+        `${API_BASE_URL}/admin/users/${userId}/role`,
         {
           method: "PATCH",
           headers: {
@@ -118,7 +119,7 @@ function Users() {
 
     try {
       const response = await fetch(
-        `http://localhost:3000/admin/users/${userId}`,
+        `${API_BASE_URL}/admin/users/${userId}`,
         {
           method: "DELETE",
           headers: {

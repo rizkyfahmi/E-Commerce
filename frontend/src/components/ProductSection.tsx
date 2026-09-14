@@ -1,3 +1,4 @@
+import { API_BASE_URL } from "../lib/config";
 import { Heart, Search, Star, Store, Filter, X, Zap, ShoppingCart } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -90,7 +91,7 @@ function ProductSection({
         setLoading(true);
         setError("");
 
-        const response = await fetch("http://localhost:3000/product?limit=100");
+        const response = await fetch(`${API_BASE_URL}/product?limit=100`);
 
         if (!response.ok) {
           throw new Error("Gagal mengambil data produk");
@@ -115,7 +116,7 @@ function ProductSection({
       if (!token) return;
 
       try {
-        const response = await fetch("http://localhost:3000/wishlist", {
+        const response = await fetch(`${API_BASE_URL}/wishlist`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -168,7 +169,7 @@ function ProductSection({
     }
 
     try {
-      const response = await fetch(`http://localhost:3000/wishlist/${id}`, {
+      const response = await fetch(`${API_BASE_URL}/wishlist/${id}`, {
         method: liked ? "DELETE" : "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -256,7 +257,7 @@ function ProductSection({
                 src={
                   product.image?.startsWith("http")
                     ? product.image
-                    : `http://localhost:3000/uploads/${product.image}`
+                    : `${API_BASE_URL}/uploads/${product.image}`
                 }
                 alt={product.name}
                 className="h-full w-full object-cover transition duration-500 group-hover:scale-105"

@@ -1,3 +1,4 @@
+import { API_BASE_URL } from "../../lib/config";
 import { useEffect, useState } from "react";
 import AdminLayout from "../../components/admin/AdminLayout";
 import {
@@ -45,7 +46,7 @@ function Categories() {
   const fetchCategories = async () => {
     try {
       setLoading(true);
-      const response = await fetch("http://localhost:3000/category?includeInactive=true");
+      const response = await fetch(`${API_BASE_URL}/category?includeInactive=true`);
 
       if (!response.ok) {
         throw new Error("Gagal mengambil kategori");
@@ -75,8 +76,8 @@ function Categories() {
     try {
       setSubmitting(true);
       const url = editingId
-        ? `http://localhost:3000/category/${editingId}`
-        : "http://localhost:3000/category";
+        ? `${API_BASE_URL}/category/${editingId}`
+        : `${API_BASE_URL}/category`;
 
       const method = editingId ? "PATCH" : "POST";
 
@@ -120,7 +121,7 @@ function Categories() {
 
   const handleToggleActive = async (cat: Category) => {
     try {
-      const response = await fetch(`http://localhost:3000/category/${cat.id}/toggle`, {
+      const response = await fetch(`${API_BASE_URL}/category/${cat.id}/toggle`, {
         method: "PATCH",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -156,7 +157,7 @@ function Categories() {
     if (!window.confirm(message)) return;
 
     try {
-      const response = await fetch(`http://localhost:3000/category/${id}`, {
+      const response = await fetch(`${API_BASE_URL}/category/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,

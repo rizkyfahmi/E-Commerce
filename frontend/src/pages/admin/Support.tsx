@@ -1,3 +1,4 @@
+import { API_BASE_URL } from "../../lib/config";
 import { useEffect, useState } from "react";
 import AdminLayout from "../../components/admin/AdminLayout";
 import {
@@ -93,7 +94,7 @@ function AdminSupport() {
 
   const fetchStats = async () => {
     try {
-      const res = await fetch("http://localhost:3000/ticket/admin/stats", {
+      const res = await fetch(`${API_BASE_URL}/ticket/admin/stats`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (res.ok) {
@@ -114,7 +115,7 @@ function AdminSupport() {
       if (categoryFilter) params.append("category", categoryFilter);
       if (search) params.append("search", search);
 
-      const res = await fetch(`http://localhost:3000/ticket/admin/all?${params.toString()}`, {
+      const res = await fetch(`${API_BASE_URL}/ticket/admin/all?${params.toString()}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -146,7 +147,7 @@ function AdminSupport() {
     const fetchDetail = async () => {
       try {
         setTicketLoading(true);
-        const res = await fetch(`http://localhost:3000/ticket/${selectedTicketId}`, {
+        const res = await fetch(`${API_BASE_URL}/ticket/${selectedTicketId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (res.ok) {
@@ -169,7 +170,7 @@ function AdminSupport() {
 
     try {
       setSendingReply(true);
-      const res = await fetch(`http://localhost:3000/ticket/${selectedTicketId}/message`, {
+      const res = await fetch(`${API_BASE_URL}/ticket/${selectedTicketId}/message`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -204,7 +205,7 @@ function AdminSupport() {
     try {
       setProcessingAction(true);
       const res = await fetch(
-        `http://localhost:3000/ticket/${selectedTicketId}/approve-category`,
+        `${API_BASE_URL}/ticket/${selectedTicketId}/approve-category`,
         {
           method: "POST",
           headers: { Authorization: `Bearer ${token}` },
@@ -220,7 +221,7 @@ function AdminSupport() {
       fetchStats();
       fetchTickets();
 
-      const refreshRes = await fetch(`http://localhost:3000/ticket/${selectedTicketId}`, {
+      const refreshRes = await fetch(`${API_BASE_URL}/ticket/${selectedTicketId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (refreshRes.ok) {
@@ -240,7 +241,7 @@ function AdminSupport() {
     try {
       setProcessingAction(true);
       const res = await fetch(
-        `http://localhost:3000/ticket/${selectedTicketId}/reject-category`,
+        `${API_BASE_URL}/ticket/${selectedTicketId}/reject-category`,
         {
           method: "POST",
           headers: {
@@ -262,7 +263,7 @@ function AdminSupport() {
       fetchStats();
       fetchTickets();
 
-      const refreshRes = await fetch(`http://localhost:3000/ticket/${selectedTicketId}`, {
+      const refreshRes = await fetch(`${API_BASE_URL}/ticket/${selectedTicketId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (refreshRes.ok) {

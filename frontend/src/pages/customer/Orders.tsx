@@ -1,3 +1,4 @@
+import { API_BASE_URL } from "../../lib/config";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
@@ -128,7 +129,7 @@ function Orders() {
   const fetchOrders = async () => {
     try {
       setLoading(true);
-      const response = await fetch("http://localhost:3000/order", {
+      const response = await fetch(`${API_BASE_URL}/order`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -268,7 +269,7 @@ function Orders() {
     const formData = new FormData();
     formData.append("file", file);
 
-    const res = await fetch("http://localhost:3000/upload/file", {
+    const res = await fetch(`${API_BASE_URL}/upload/file`, {
       method: "POST",
       body: formData,
     });
@@ -300,7 +301,7 @@ function Orders() {
         uploadedVideoFilename = await uploadMediaFile(selectedVideo);
       }
 
-      const res = await fetch("http://localhost:3000/review", {
+      const res = await fetch(`${API_BASE_URL}/review`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -342,11 +343,11 @@ function Orders() {
 
       let endpoint = "";
       if (type === "PAY") {
-        endpoint = `http://localhost:3000/order/${order.id}/pay`;
+        endpoint = `${API_BASE_URL}/order/${order.id}/pay`;
       } else if (type === "CANCEL") {
-        endpoint = `http://localhost:3000/order/${order.id}/cancel`;
+        endpoint = `${API_BASE_URL}/order/${order.id}/cancel`;
       } else if (type === "RECEIVE") {
-        endpoint = `http://localhost:3000/order/${order.id}/receive`;
+        endpoint = `${API_BASE_URL}/order/${order.id}/receive`;
       }
 
       const response = await fetch(endpoint, {
@@ -510,7 +511,7 @@ function Orders() {
                                   item.product?.image
                                     ? item.product.image.startsWith("http")
                                       ? item.product.image
-                                      : `http://localhost:3000/uploads/${item.product.image}`
+                                      : `${API_BASE_URL}/uploads/${item.product.image}`
                                     : "https://images.unsplash.com/photo-1603302576837-37561b2e2302?q=80&w=500&auto=format&fit=crop"
                                 }
                                 alt={item.product?.name || "Product"}
@@ -727,7 +728,7 @@ function Orders() {
                     reviewModalData.productImage
                       ? reviewModalData.productImage.startsWith("http")
                         ? reviewModalData.productImage
-                        : `http://localhost:3000/uploads/${reviewModalData.productImage}`
+                        : `${API_BASE_URL}/uploads/${reviewModalData.productImage}`
                       : "https://images.unsplash.com/photo-1603302576837-37561b2e2302?q=80&w=500&auto=format&fit=crop"
                   }
                   alt={reviewModalData.productName}

@@ -1,3 +1,4 @@
+import { API_BASE_URL } from "../../lib/config";
 import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import {
@@ -98,7 +99,7 @@ function Store({ onAddToCart, onProductClick }: StoreProps) {
       try {
         setLoading(true);
         setError("");
-        const response = await fetch(`http://localhost:3000/product/store/${sellerId}`);
+        const response = await fetch(`${API_BASE_URL}/product/store/${sellerId}`);
         if (!response.ok) {
           throw new Error("Toko tidak ditemukan atau tidak aktif.");
         }
@@ -284,7 +285,7 @@ function Store({ onAddToCart, onProductClick }: StoreProps) {
                           product.image
                             ? product.image.startsWith("http")
                               ? product.image
-                              : `http://localhost:3000/uploads/${product.image}`
+                              : `${API_BASE_URL}/uploads/${product.image}`
                             : "https://images.unsplash.com/photo-1603302576837-37561b2e2302?q=80&w=500&auto=format&fit=crop"
                         }
                         alt={product.name}

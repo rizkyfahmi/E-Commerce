@@ -1,3 +1,4 @@
+import { API_BASE_URL } from "../lib/config";
 import {
   Sparkles,
   Laptop,
@@ -110,7 +111,7 @@ function CategorySection({
     const fetchCategories = async () => {
       try {
         setLoading(true);
-        const res = await fetch("http://localhost:3000/category");
+        const res = await fetch(`${API_BASE_URL}/category`);
         if (res.ok) {
           const data = await res.json();
           setCategories(Array.isArray(data) ? data : []);

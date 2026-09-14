@@ -1,3 +1,4 @@
+import { API_BASE_URL } from "../lib/config";
 import React, { useState } from "react";
 import {
   X,
@@ -57,7 +58,7 @@ export default function RefundModal({
 
     try {
       setLoading(true);
-      const response = await fetch(`http://localhost:3000/order/${orderId}/request-refund`, {
+      const response = await fetch(`${API_BASE_URL}/order/${orderId}/request-refund`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,

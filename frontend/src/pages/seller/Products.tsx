@@ -1,3 +1,4 @@
+import { API_BASE_URL } from "../../lib/config";
 import { useEffect, useState } from "react";
 import SellerLayout from "../../components/seller/SellerLayout";
 import {
@@ -72,7 +73,7 @@ function SellerProducts() {
     try {
       setLoading(true);
       const response = await fetch(
-        "http://localhost:3000/product/my-product",
+        `${API_BASE_URL}/product/my-product`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -98,7 +99,7 @@ function SellerProducts() {
   // =========================
   const fetchCategories = async () => {
     try {
-      const response = await fetch("http://localhost:3000/category");
+      const response = await fetch(`${API_BASE_URL}/category`);
       if (!response.ok) {
         throw new Error("Gagal mengambil kategori");
       }
@@ -156,7 +157,7 @@ function SellerProducts() {
       if (editingId) {
         // EDIT
         response = await fetch(
-          `http://localhost:3000/product/${editingId}`,
+          `${API_BASE_URL}/product/${editingId}`,
           {
             method: "PATCH",
             headers: {
@@ -175,7 +176,7 @@ function SellerProducts() {
         );
       } else {
         // TAMBAH
-        response = await fetch("http://localhost:3000/product", {
+        response = await fetch(`${API_BASE_URL}/product`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -241,7 +242,7 @@ function SellerProducts() {
 
     try {
       const response = await fetch(
-        `http://localhost:3000/product/${productId}`,
+        `${API_BASE_URL}/product/${productId}`,
         {
           method: "DELETE",
           headers: {

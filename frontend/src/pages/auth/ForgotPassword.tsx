@@ -1,3 +1,4 @@
+import { API_BASE_URL } from "../../lib/config";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -51,7 +52,7 @@ function ForgotPassword() {
       setLoading(true);
       setError("");
 
-      const res = await fetch("http://localhost:3000/auth/forgot-password/request", {
+      const res = await fetch(`${API_BASE_URL}/auth/forgot-password/request`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ identifier: identifier.trim() }),
@@ -93,7 +94,7 @@ function ForgotPassword() {
       setLoading(true);
       setError("");
 
-      const res = await fetch("http://localhost:3000/auth/forgot-password/reset", {
+      const res = await fetch(`${API_BASE_URL}/auth/forgot-password/reset`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

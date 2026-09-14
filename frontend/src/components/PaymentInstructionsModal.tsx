@@ -1,3 +1,4 @@
+import { API_BASE_URL } from "../lib/config";
 import { useState, useEffect } from "react";
 import {
   X,
@@ -100,7 +101,7 @@ export default function PaymentInstructionsModal({
   const handleSimulatePayment = async () => {
     try {
       setSimulatingPayment(true);
-      const response = await fetch(`http://localhost:3000/order/${order.id}/pay`, {
+      const response = await fetch(`${API_BASE_URL}/order/${order.id}/pay`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,

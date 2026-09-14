@@ -1,3 +1,4 @@
+import { API_BASE_URL } from "../../lib/config";
 import { useEffect, useState } from "react";
 import { ArrowLeft, Minus, Plus, ShoppingBag, Trash2, AlertCircle } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
@@ -41,7 +42,7 @@ function Cart({ onCartChange }: CartProps) {
         return;
       }
 
-      const response = await fetch("http://localhost:3000/cart", {
+      const response = await fetch(`${API_BASE_URL}/cart`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -77,7 +78,7 @@ function Cart({ onCartChange }: CartProps) {
     if (quantity < 1) return;
 
     try {
-      const response = await fetch(`http://localhost:3000/cart/${cartId}`, {
+      const response = await fetch(`${API_BASE_URL}/cart/${cartId}`, {
         method: "PATCH",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -104,7 +105,7 @@ function Cart({ onCartChange }: CartProps) {
     if (!confirmDelete) return;
 
     try {
-      const response = await fetch(`http://localhost:3000/cart/${cartId}`, {
+      const response = await fetch(`${API_BASE_URL}/cart/${cartId}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -206,7 +207,7 @@ function Cart({ onCartChange }: CartProps) {
                             item.product.image
                               ? item.product.image.startsWith("http")
                                 ? item.product.image
-                                : `http://localhost:3000/uploads/${item.product.image}`
+                                : `${API_BASE_URL}/uploads/${item.product.image}`
                               : "https://images.unsplash.com/photo-1603302576837-37561b2e2302?q=80&w=500&auto=format&fit=crop"
                           }
                           alt={item.product.name}

@@ -1,3 +1,4 @@
+import { API_BASE_URL } from "../../lib/config";
 import { useEffect, useState } from "react";
 import AdminLayout from "../../components/admin/AdminLayout";
 import { Edit, Search, Store, Trash2, X } from "lucide-react";
@@ -47,7 +48,7 @@ function Products() {
   const fetchProducts = async () => {
     try {
       setLoading(true);
-      const response = await fetch("http://localhost:3000/product");
+      const response = await fetch(`${API_BASE_URL}/product`);
 
       if (!response.ok) {
         throw new Error("Gagal mengambil produk");
@@ -64,7 +65,7 @@ function Products() {
 
   const fetchCategories = async () => {
     try {
-      const response = await fetch("http://localhost:3000/category");
+      const response = await fetch(`${API_BASE_URL}/category`);
       if (response.ok) {
         const data = await response.json();
         setCategories(data);
@@ -95,7 +96,7 @@ function Products() {
 
     try {
       const response = await fetch(
-        `http://localhost:3000/product/${editingProduct.id}`,
+        `${API_BASE_URL}/product/${editingProduct.id}`,
         {
           method: "PATCH",
           headers: {
@@ -135,7 +136,7 @@ function Products() {
 
     try {
       const response = await fetch(
-        `http://localhost:3000/product/${productId}`,
+        `${API_BASE_URL}/product/${productId}`,
         {
           method: "DELETE",
           headers: {
@@ -259,7 +260,7 @@ function Products() {
                               src={
                                 product.image.startsWith("http")
                                   ? product.image
-                                  : `http://localhost:3000/uploads/${product.image}`
+                                  : `${API_BASE_URL}/uploads/${product.image}`
                               }
                               alt={product.name}
                               className="h-full w-full object-cover"

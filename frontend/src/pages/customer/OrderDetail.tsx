@@ -1,3 +1,4 @@
+import { API_BASE_URL } from "../../lib/config";
 import {
   ArrowLeft,
   Store,
@@ -155,7 +156,7 @@ function OrderDetail() {
 
   const fetchOrder = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/order/${id}`, {
+      const response = await fetch(`${API_BASE_URL}/order/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -189,11 +190,11 @@ function OrderDetail() {
 
       let endpoint = "";
       if (actionType === "PAY") {
-        endpoint = `http://localhost:3000/order/${order.id}/pay`;
+        endpoint = `${API_BASE_URL}/order/${order.id}/pay`;
       } else if (actionType === "CANCEL") {
-        endpoint = `http://localhost:3000/order/${order.id}/cancel`;
+        endpoint = `${API_BASE_URL}/order/${order.id}/cancel`;
       } else if (actionType === "RECEIVE") {
-        endpoint = `http://localhost:3000/order/${order.id}/receive`;
+        endpoint = `${API_BASE_URL}/order/${order.id}/receive`;
       }
 
       const response = await fetch(endpoint, {
@@ -487,7 +488,7 @@ function OrderDetail() {
                         item.product.image
                           ? item.product.image.startsWith("http")
                             ? item.product.image
-                            : `http://localhost:3000/uploads/${item.product.image}`
+                            : `${API_BASE_URL}/uploads/${item.product.image}`
                           : "https://images.unsplash.com/photo-1603302576837-37561b2e2302?q=80&w=500&auto=format&fit=crop"
                       }
                       alt={item.product.name}

@@ -1,3 +1,4 @@
+import { API_BASE_URL } from "../../lib/config";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import SellerLayout from "../../components/seller/SellerLayout";
@@ -82,7 +83,7 @@ function SellerReviews() {
   const fetchReviews = async () => {
     try {
       setLoading(true);
-      const res = await fetch("http://localhost:3000/review/seller/my-reviews", {
+      const res = await fetch(`${API_BASE_URL}/review/seller/my-reviews`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -138,7 +139,7 @@ function SellerReviews() {
   const getMediaUrl = (path: string) => {
     if (!path) return "";
     if (path.startsWith("http")) return path;
-    return `http://localhost:3000/uploads/${path}`;
+    return `${API_BASE_URL}/uploads/${path}`;
   };
 
   return (
