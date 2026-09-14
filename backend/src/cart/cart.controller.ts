@@ -18,7 +18,7 @@ import { UpdateCartDto } from './dto/update-cart.dto';
 @Controller('cart')
 @UseGuards(JwtAuthGuard)
 export class CartController {
-  constructor(private readonly cartService: CartService) {}
+  constructor(private readonly cartService: CartService) { }
 
   @Post()
   create(@Req() req: any, @Body() body: CreateCartDto) {

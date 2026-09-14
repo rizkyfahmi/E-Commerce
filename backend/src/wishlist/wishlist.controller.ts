@@ -14,7 +14,7 @@ import { WishlistService } from './wishlist.service';
 @Controller('wishlist')
 @UseGuards(JwtAuthGuard)
 export class WishlistController {
-  constructor(private readonly wishlistService: WishlistService) {}
+  constructor(private readonly wishlistService: WishlistService) { }
 
   @Get()
   findAll(@Req() req: any) {

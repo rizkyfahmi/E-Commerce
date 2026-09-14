@@ -20,7 +20,7 @@ import { UpdateProductDto } from './dto/update-product.dto';
 
 @Controller('product')
 export class ProductController {
-  constructor(private readonly productService: ProductService) {}
+  constructor(private readonly productService: ProductService) { }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.SELLER)

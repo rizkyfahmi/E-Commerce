@@ -22,7 +22,7 @@ import { TicketStatus } from '@prisma/client';
 @Controller('ticket')
 @UseGuards(JwtAuthGuard)
 export class TicketController {
-  constructor(private readonly ticketService: TicketService) {}
+  constructor(private readonly ticketService: TicketService) { }
 
   // ==========================================
   // USER (CUSTOMER & SELLER) ENDPOINTS

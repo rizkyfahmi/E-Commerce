@@ -18,7 +18,7 @@ import { Role } from 'src/auth/enums/role.enum';
 
 @Controller('review')
 export class ReviewController {
-  constructor(private readonly reviewService: ReviewService) {}
+  constructor(private readonly reviewService: ReviewService) { }
 
   @Post()
   @UseGuards(JwtAuthGuard)

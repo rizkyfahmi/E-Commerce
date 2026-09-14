@@ -20,7 +20,7 @@ import { CheckoutDto, DirectCheckoutDto, RequestRefundDto } from './dto/checkout
 @Controller('order')
 @UseGuards(JwtAuthGuard)
 export class OrderController {
-  constructor(private readonly orderService: OrderService) {}
+  constructor(private readonly orderService: OrderService) { }
 
   @Post('checkout')
   checkout(@Req() req: any, @Body() body: CheckoutDto) {
@@ -55,7 +55,7 @@ export class OrderController {
   sellerOrders(@Req() req: any) {
     return this.orderService.sellerOrders(req.user.sub);
   }
-  
+
   @Post(':id/pay')
   payOrder(@Param('id') id: string, @Req() req: any) {
     return this.orderService.payPendingOrder(id, req.user.sub);
