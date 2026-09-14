@@ -4,12 +4,12 @@ import {
   ForbiddenException,
 } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { Role } from 'src/auth/enums/role.enum';
+import { Role } from '../auth/enums/role.enum';
 import { OrderStatus } from '@prisma/client';
 
 @Injectable()
 export class AdminService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   // =========================
   // DASHBOARD STATS
@@ -107,12 +107,12 @@ export class AdminService {
           role ? { role } : {},
           search
             ? {
-                OR: [
-                  { fullName: { contains: search } },
-                  { email: { contains: search } },
-                  { username: { contains: search } },
-                ],
-              }
+              OR: [
+                { fullName: { contains: search } },
+                { email: { contains: search } },
+                { username: { contains: search } },
+              ],
+            }
             : {},
         ],
       },
