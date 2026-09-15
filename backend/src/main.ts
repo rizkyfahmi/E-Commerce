@@ -8,7 +8,8 @@ import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.enableCors({
-    origin: 'http://localhost:5173',
+    origin: 'https://e-commerce-delta-bay-84.vercel.app',
+    credentials: true,
   });
 
   app.useGlobalPipes(
